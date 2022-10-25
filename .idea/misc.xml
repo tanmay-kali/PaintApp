@@ -5,7 +5,11 @@
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.15602836879432624" />
         <entry key="../../../layout/custom_preview.xml" value="0.15437649880095924" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.375" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/path_color_normal.xml" value="0.2095" />
+        <entry key="app/src/main/res/drawable/path_color_selected.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/selected.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.21350861287398004" />
       </map>
     </option>
   </component>

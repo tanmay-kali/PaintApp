@@ -1,43 +1,58 @@
 package edu.tcu.tanmaykejriwal.paint
 import android.content.Context
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.AttributeSet
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
+import androidx.core.view.iterator
 import edu.tcu.tanmaykejriwal.paint.DrawingView
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        var btnColor = findViewById<Button>(R.id.color)
-        var btnBlack = findViewById<Button>(R.id.black)
-        var btnSize = findViewById<Button>(R.id.size)
-        var btnSizeRed = findViewById<Button>(R.id.sizesub)
-        var btnUndo = findViewById<Button>(R.id.undo)
+        var pallet = findViewById<LinearLayout>(R.id.pallete_ll)
         var board = findViewById<DrawingView>(R.id.board)
-
-        btnColor.setOnClickListener{
-            board.SetPathColor(Color.parseColor("#0096FF"))
+        var selected=pallet[0]
+        for(iv in pallet){
+            iv.setOnClickListener {
+                board.SetPathColor((iv.background as ColorDrawable).color)
+                (iv as ImageView).setImageResource(R.drawable.path_color_selected)
+                (selected as ImageView).setImageResource(R.drawable.path_color_normal)
+                selected=iv
+            }
         }
-        btnBlack.setOnClickListener {
-            board.SetPathColor(Color.BLACK)
-        }
-
-        btnSize.setOnClickListener{
-            board.SetPathWidth(board.getPathWidth()*2)
-        }
-
-        btnSizeRed.setOnClickListener {
-            board.SetPathWidth(board.getPathWidth()/2)
-        }
-
-        btnUndo.setOnClickListener{
-            board.undoPath()
-        }
+//        var btnColor = findViewById<Button>(R.id.color)
+//        var btnBlack = findViewById<Button>(R.id.black)
+//        var btnSize = findViewById<Button>(R.id.size)
+//        var btnSizeRed = findViewById<Button>(R.id.sizesub)
+//        var btnUndo = findViewById<Button>(R.id.undo)
+//        var board = findViewById<DrawingView>(R.id.board)
+//
+//        btnColor.setOnClickListener{
+//            board.SetPathColor(Color.parseColor("#0096FF"))
+//        }
+//        btnBlack.setOnClickListener {
+//            board.SetPathColor(Color.BLACK)
+//        }
+//
+//        btnSize.setOnClickListener{
+//            board.SetPathWidth(board.getPathWidth()*2)
+//        }
+//
+//        btnSizeRed.setOnClickListener {
+//            board.SetPathWidth(board.getPathWidth()/2)
+//        }
+//
+//        btnUndo.setOnClickListener{
+//            board.undoPath()
+//        }
     }
 }
 

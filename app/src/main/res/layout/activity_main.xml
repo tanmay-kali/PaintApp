@@ -9,66 +9,128 @@
     <edu.tcu.tanmaykejriwal.paint.DrawingView
         android:id="@+id/board"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
-
-    <Button
-        android:id="@+id/color"
-        android:layout_width="53dp"
-        android:layout_height="51dp"
-        android:layout_marginEnd="316dp"
-        android:text=""
-        app:backgroundTint="@color/blue"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.91" />
+        app:layout_constraintBottom_toTopOf="@+id/pallete_ll"/>
 
-    <Button
-        android:id="@+id/black"
-        android:layout_width="53dp"
-        android:layout_height="51dp"
-        android:layout_marginEnd="244dp"
-        android:text=""
-        app:backgroundTint="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.91" />
+    <LinearLayout
+        android:id="@+id/pallete_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity = "center"
+        app:layout_constraintTop_toBottomOf="@id/board"
+        app:layout_constraintBottom_toTopOf="@id/pallete2"
+        >
 
-    <Button
-        android:id="@+id/size"
-        android:layout_width="53dp"
-        android:layout_height="51dp"
-        android:layout_marginEnd="176dp"
-        android:text="+"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.91" />
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
 
-    <Button
-        android:id="@+id/sizesub"
-        android:layout_width="53dp"
-        android:layout_height="51dp"
-        android:layout_marginEnd="104dp"
-        android:text="-"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.91" />
+            android:background="@color/black"
+            android:src="@drawable/path_color_selected"
+            >
+        </ImageView>
 
-    <Button
-        android:id="@+id/undo"
-        android:layout_width="53dp"
-        android:layout_height="51dp"
-        android:layout_marginEnd="36dp"
-        android:text="U"
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+
+            android:background="@color/red"
+            android:src="@drawable/path_color_normal"
+            >
+
+        </ImageView>
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+
+            android:background="@color/green"
+            android:src="@drawable/path_color_normal"
+            > </ImageView>
+
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+
+            android:background="@color/blue"
+            android:src="@drawable/path_color_normal"
+            > </ImageView>
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+
+            android:background="@color/purple"
+            android:src="@drawable/path_color_normal"
+            > </ImageView>
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+
+            android:background="@color/white"
+            android:src="@drawable/path_color_normal"
+            > </ImageView>
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/pallete2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity = "center"
+        app:layout_constraintTop_toBottomOf="@id/pallete_ll"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.91" />
+        >
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:background="@color/light_gray"
+            android:src="@drawable/ic_brush"
+            ></ImageView>
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:background="@color/light_gray"
+            android:src="@drawable/ic_gallery"
+            ></ImageView>
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:background="@color/light_gray"
+            android:src="@drawable/ic_undo"
+            ></ImageView>
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:background="@color/light_gray"
+            android:src="@drawable/ic_save"
+            ></ImageView>
+    </LinearLayout>
+
+
+
+
+
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
