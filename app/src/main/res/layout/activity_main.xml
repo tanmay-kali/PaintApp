@@ -7,8 +7,68 @@
     tools:context=".MainActivity">
 
     <edu.tcu.tanmaykejriwal.paint.DrawingView
+        android:id="@+id/board"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <Button
+        android:id="@+id/color"
+        android:layout_width="53dp"
+        android:layout_height="51dp"
+        android:layout_marginEnd="316dp"
+        android:text=""
+        app:backgroundTint="@color/blue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.91" />
+
+    <Button
+        android:id="@+id/black"
+        android:layout_width="53dp"
+        android:layout_height="51dp"
+        android:layout_marginEnd="244dp"
+        android:text=""
+        app:backgroundTint="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.91" />
+
+    <Button
+        android:id="@+id/size"
+        android:layout_width="53dp"
+        android:layout_height="51dp"
+        android:layout_marginEnd="176dp"
+        android:text="+"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.91" />
+
+    <Button
+        android:id="@+id/sizesub"
+        android:layout_width="53dp"
+        android:layout_height="51dp"
+        android:layout_marginEnd="104dp"
+        android:text="-"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.91" />
+
+    <Button
+        android:id="@+id/undo"
+        android:layout_width="53dp"
+        android:layout_height="51dp"
+        android:layout_marginEnd="36dp"
+        android:text="U"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.91" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

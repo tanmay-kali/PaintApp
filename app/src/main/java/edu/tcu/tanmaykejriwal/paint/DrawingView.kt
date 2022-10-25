@@ -9,11 +9,14 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import android.widget.Button
+import android.widget.Toast
 
 class DrawingView(context: Context, attrs:AttributeSet) : View(context,attrs){
     private val paint = Paint()
     private val pathList = mutableListOf<CustomPath>()
     private var path = CustomPath(Color.BLACK,10 * resources.displayMetrics.density);
+
 
     init {
         paint.style = Paint.Style.STROKE;
@@ -54,6 +57,30 @@ class DrawingView(context: Context, attrs:AttributeSet) : View(context,attrs){
 
 
         }
+    }
+
+
+    fun SetPathColor(Color:Int){
+        path = CustomPath(Color,path.width)
+    }
+
+     fun SetPathWidth(Width:Float){
+         path = CustomPath(path.color,Width)
+    }
+
+    fun getPathWidth():Float{
+        return path.width
+    }
+
+    fun undoPath(){
+        if(pathList.size>0){
+            pathList.removeLast()
+            invalidate()
+        }
+        else{
+            Toast.makeText(context,"Nothing to Undo", Toast.LENGTH_SHORT).show()
+        }
+
     }
 }
 
