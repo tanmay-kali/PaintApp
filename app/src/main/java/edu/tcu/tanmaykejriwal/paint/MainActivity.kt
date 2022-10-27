@@ -1,4 +1,5 @@
 package edu.tcu.tanmaykejriwal.paint
+import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -19,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         var pallet = findViewById<LinearLayout>(R.id.pallete_ll)
         var board = findViewById<DrawingView>(R.id.board)
+        var undo = findViewById<ImageView>(R.id.undo)
         var selected=pallet[0]
         for(iv in pallet){
             iv.setOnClickListener {
@@ -28,31 +30,36 @@ class MainActivity : AppCompatActivity() {
                 selected=iv
             }
         }
-//        var btnColor = findViewById<Button>(R.id.color)
-//        var btnBlack = findViewById<Button>(R.id.black)
-//        var btnSize = findViewById<Button>(R.id.size)
-//        var btnSizeRed = findViewById<Button>(R.id.sizesub)
-//        var btnUndo = findViewById<Button>(R.id.undo)
-//        var board = findViewById<DrawingView>(R.id.board)
-//
-//        btnColor.setOnClickListener{
-//            board.SetPathColor(Color.parseColor("#0096FF"))
-//        }
-//        btnBlack.setOnClickListener {
-//            board.SetPathColor(Color.BLACK)
-//        }
-//
-//        btnSize.setOnClickListener{
-//            board.SetPathWidth(board.getPathWidth()*2)
-//        }
-//
-//        btnSizeRed.setOnClickListener {
-//            board.SetPathWidth(board.getPathWidth()/2)
-//        }
-//
-//        btnUndo.setOnClickListener{
-//            board.undoPath()
-//        }
+
+        undo.setOnClickListener{
+            board.undoPath()
+        }
+
+
+
+        findViewById<ImageView>(R.id.brush).setOnClickListener {
+            val dialog = Dialog(this)
+            dialog.setContentView(R.layout.path_width_selector)
+            dialog.show()
+            dialog.findViewById<ImageView>(R.id.small_width_iv).setOnClickListener {
+                board.SetPathWidth(5*resources.displayMetrics.density)
+                dialog.dismiss()
+            }
+
+            dialog.findViewById<ImageView>(R.id.medium_width_iv).setOnClickListener {
+                board.SetPathWidth(10*resources.displayMetrics.density)
+                dialog.dismiss()
+            }
+
+            dialog.findViewById<ImageView>(R.id.large_width_iv).setOnClickListener {
+                board.SetPathWidth(15*resources.displayMetrics.density)
+                dialog.dismiss()
+            }
+
+
+        }
+
+
     }
 }
 
