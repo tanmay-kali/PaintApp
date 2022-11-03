@@ -2,9 +2,11 @@ package edu.tcu.tanmaykejriwal.paint
 import android.app.Dialog
 import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -22,8 +24,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.drawToBitmap
 import androidx.core.view.get
 import androidx.core.view.iterator
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestBuilder
 import edu.tcu.tanmaykejriwal.paint.DrawingView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.IOException
 
@@ -80,12 +90,26 @@ class MainActivity : AppCompatActivity() {
             // Callback is invoked after the user selects a media item or closes the
             // photo picker.
             var background = findViewById<ImageView>(R.id.background_img)
+            val dialog = showInProgress()
             if (uri != null) {
                 location= uri.toString()
                 //background.setImageURI(Uri.parse(uri.toString()));
-                Glide.with(this)
-                    .load(location)
-                    .into(background)
+
+                //Glide.with(this).load(location).into(background)
+
+                lifecycleScope.launch{
+                    var request:RequestBuilder<Drawable>
+                    withContext(Dispatchers.IO){
+                        delay(1000)
+                        request = Glide.with(this@MainActivity).load(location)
+                    }
+                    dialog.dismiss()
+                    request.into(background)
+
+                }
+
+
+
                 Log.d("PhotoPicker", "Selected URI: $uri")
             } else {
                 Log.d("PhotoPicker", "No media selected")
@@ -97,6 +121,19 @@ class MainActivity : AppCompatActivity() {
         }
 
         //will take time
+        save.setOnClickListener{
+            setUpSave()
+        }
+
+        //code routine compress and draw to bitmap
+
+
+
+
+
+    }
+
+    private fun setUpSave() {
         var background = findViewById<ImageView>(R.id.background_img)
         if(background.drawable==null){
             background.setBackgroundColor(Color.WHITE)
@@ -109,17 +146,31 @@ class MainActivity : AppCompatActivity() {
             put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DCIM)
         }
 
-        //external means outsideof yor app
+        //external means outside of yor app
         var uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,values)
         uri?.let {
             contentResolver.openOutputStream(it).use {it_->
                 //can take time
                 bitmap.compress(Bitmap.CompressFormat.JPEG,90,it_)
             }
+            val shareIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_STREAM, uri)
+                type = "image/jpeg"
+            }
+            startActivity(Intent.createChooser(shareIntent, null))
         }
 
 
 
+    }
+
+    private fun showInProgress():Dialog{
+        var dialog = Dialog(this)
+        dialog.setContentView(R.layout.in_progress)
+        dialog.setCancelable(false)
+        dialog.show()
+        return dialog
     }
 
 
