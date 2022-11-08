@@ -134,31 +134,48 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpSave() {
-        var background = findViewById<ImageView>(R.id.background_img)
-        if(background.drawable==null){
-            background.setBackgroundColor(Color.WHITE)
-        }
-
-        val bitmap = findViewById<FrameLayout>(R.id.frame).drawToBitmap()
-        val values = ContentValues().apply {
-            put(MediaStore.MediaColumns.DISPLAY_NAME, System.currentTimeMillis().toString().substring(2,11)+".jpeg")
-            put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
-            put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DCIM)
-        }
-
-        //external means outside of yor app
-        var uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,values)
-        uri?.let {
-            contentResolver.openOutputStream(it).use {it_->
-                //can take time
-                bitmap.compress(Bitmap.CompressFormat.JPEG,90,it_)
+        val dialog = showInProgress();
+        lifecycleScope.launch{
+            var background = findViewById<ImageView>(R.id.background_img)
+            if(background.drawable==null){
+                background.setBackgroundColor(Color.WHITE)
             }
-            val shareIntent: Intent = Intent().apply {
-                action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_STREAM, uri)
-                type = "image/jpeg"
+
+            //drawtoBitmaop
+            val bitmap = findViewById<FrameLayout>(R.id.frame)
+            withContext(Dispatchers.IO) {
+                delay(1000)
+
+                val values = ContentValues().apply {
+                    put(
+                        MediaStore.MediaColumns.DISPLAY_NAME,
+                        System.currentTimeMillis().toString().substring(2, 11) + ".jpeg"
+                    )
+                    put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
+                    put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DCIM)
+                }
+
+                //external means outside of yor app
+                var uri =
+                    contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+                uri?.let {
+                    contentResolver.openOutputStream(it).use { it_ ->
+                        //can take time
+                        //compress
+                        val tmp = bitmap.drawToBitmap()
+                        tmp.compress(Bitmap.CompressFormat.JPEG, 90, it_)
+                    }
+                    dialog.dismiss()
+                    val shareIntent: Intent = Intent().apply {
+                        action = Intent.ACTION_SEND
+                        putExtra(Intent.EXTRA_STREAM, uri)
+                        type = "image/jpeg"
+                    }
+                    startActivity(Intent.createChooser(shareIntent, null))
+                }
+
             }
-            startActivity(Intent.createChooser(shareIntent, null))
+
         }
 
 
