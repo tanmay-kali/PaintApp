@@ -135,29 +135,24 @@ class MainActivity : AppCompatActivity() {
 
     private fun setUpSave() {
         val dialog = showInProgress();
+        var background = findViewById<ImageView>(R.id.background_img)
+        if(background.drawable==null){
+            background.setBackgroundColor(Color.WHITE)
+        }
+        val bitmap = findViewById<FrameLayout>(R.id.frame)
+        val values = ContentValues().apply {
+            put(
+                MediaStore.MediaColumns.DISPLAY_NAME,
+                System.currentTimeMillis().toString().substring(2, 11) + ".jpeg"
+            )
+            put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
+            put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DCIM)
+        }
+        var uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
         lifecycleScope.launch{
-            var background = findViewById<ImageView>(R.id.background_img)
-            if(background.drawable==null){
-                background.setBackgroundColor(Color.WHITE)
-            }
-
-            //drawtoBitmaop
-            val bitmap = findViewById<FrameLayout>(R.id.frame)
             withContext(Dispatchers.IO) {
                 delay(1000)
-
-                val values = ContentValues().apply {
-                    put(
-                        MediaStore.MediaColumns.DISPLAY_NAME,
-                        System.currentTimeMillis().toString().substring(2, 11) + ".jpeg"
-                    )
-                    put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
-                    put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DCIM)
-                }
-
                 //external means outside of yor app
-                var uri =
-                    contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
                 uri?.let {
                     contentResolver.openOutputStream(it).use { it_ ->
                         //can take time
@@ -165,17 +160,17 @@ class MainActivity : AppCompatActivity() {
                         val tmp = bitmap.drawToBitmap()
                         tmp.compress(Bitmap.CompressFormat.JPEG, 90, it_)
                     }
-                    dialog.dismiss()
-                    val shareIntent: Intent = Intent().apply {
-                        action = Intent.ACTION_SEND
-                        putExtra(Intent.EXTRA_STREAM, uri)
-                        type = "image/jpeg"
-                    }
-                    startActivity(Intent.createChooser(shareIntent, null))
+
                 }
 
             }
-
+            dialog.dismiss()
+            val shareIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_STREAM, uri)
+                type = "image/jpeg"
+            }
+            startActivity(Intent.createChooser(shareIntent, null))
         }
 
 
